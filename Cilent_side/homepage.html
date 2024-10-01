@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowdfunding</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+        nav ul li button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        nav ul li button:hover {
+            background-color: #45a049;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        h1, h2 {
+            color: #4CAF50;
+        }
+        p {
+            font-size: 18px;
+        }
+        #fundraiser-list {
+            margin: 20px auto;
+            padding: 0;
+            max-width: 800px;
+        }
+        #fundraiser-list li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #fundraiser-list li a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        #fundraiser-list li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>If everyone gives a little love, the world will become a beautiful paradise.</h1>
+        <p>Would you like to know more about us? Please click the button below.</p>
+    </header>
+    <nav>
+        <ul>
+            <li><button onclick="location.href='search'">Search Fundraisers</button></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Work together for a better future.</h2>
+        <ul id="fundraiser-list"></ul>
+    </main>
+    <script>
+        // Send a request for all organizer data
+        fetch('/api/organizer')
+          .then(response => response.json())
+          .then(data => {
+            const list = document.getElementById('fundraiser-list');// Get the container that displays the fundraising campaign list
+            data.forEach(fundraiser => {// Walk through each fundraiser
+              const listItem = document.createElement('li');// Create a new list item element
+              listItem.innerHTML = `
+                <strong>Organizer:</strong> ${fundraiser.ORGANIZER} <br>
+              `;// Set the contents of the list item to display the name of the organizer
+              list.appendChild(listItem);// Adds the list item to the list container
+            });
+          });
+    </script>
+</body>
+</html>
+
