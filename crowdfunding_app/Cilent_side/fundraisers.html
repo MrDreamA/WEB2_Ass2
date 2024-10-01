@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundraiser Details</title>
+</head>
+<body>
+  <h1>Fundraiser Details</h1>
+  <div id="fundraiser-details"></div>
+  <button onclick="donate()">Donate</button>
+  <ul>
+    <button onclick="location.href='/'">Home</button>
+    <button onclick="location.href='search'">Search Fundraisers</button>
+    </ul>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const fundraiserId = urlParams.get('id');
+
+    fetch(`/api/fundraiser/${fundraiserId}`)
+      .then(response => response.json())
+      .then(data => {
+        const details = document.getElementById('fundraiser-details');
+        details.innerHTML = `
+          <strong>ID:</strong> ${data.FUNDRAISE_ID} <br>
+          <strong>Organizer:</strong> ${data.ORGANIZER} <br>
+          <strong>Caption:</strong> ${data.CAPTION} <br>
+          <strong>Target Funding:</strong> ${data.TARGET_FUNDING} <br>
+          <strong>Current Funding:</strong> ${data.CURRENT_FUNDING} <br>
+          <strong>City:</strong> ${data.CITY} <br>
+          <strong>Active:</strong> ${data.ACTIVE} <br>
+          <strong>Category:</strong> ${data.CATEGORY_ID} <br>
+        `;
+      });
+
+    function donate() {
+      alert('This feature is under construction');
+    }
+  </script>
+</body>
+</html>
