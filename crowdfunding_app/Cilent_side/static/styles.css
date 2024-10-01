@@ -1,17 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-}
+}/* Sets the global font */
 
 header, nav, main {
     margin: 20px;
-}
+}/* Sets the margins */ 
 
 nav ul {
     list-style-type: none;
     padding: 0;
-}
+}/* Removes default styles and margins for navigation lists */
 
 nav ul li {
     display: inline;
     margin-right: 10px;
-}
+}/* Set navigation list items to appear inline and add a right margin */

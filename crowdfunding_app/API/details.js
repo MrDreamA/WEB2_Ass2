@@ -8,5 +8,3 @@ module.exports =
   database: 'crowdfundingdatabase',
   password: '123456'
 };
-
-

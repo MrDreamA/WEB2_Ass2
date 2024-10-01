@@ -4,6 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Fundraisers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+      margin-top: 20px;
+    }
+    form {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #search-results {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0;
+      list-style-type: none;
+    }
+    #search-results li {
+      background-color: white;
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #search-results li a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    #search-results li a:hover {
+      text-decoration: underline;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+      padding: 10px 0;
+    }
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+    nav ul li {
+      margin: 0 10px;
+    }
+    nav ul li button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+    nav ul li button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
   <h1>Search Fundraisers</h1>
@@ -18,34 +113,34 @@
     <button type="button" onclick="clearCheckboxes()">Clear</button>
   </form>
   <ul id="search-results"></ul>
-  <ul>
-    <button onclick="location.href='/'">Home</button>
-    <button onclick="location.href='fundraisers'">Fundraisers</button>
-    <button onclick="location.href=''">Search Fundraisers</button>
+  <nav>
+    <ul>
+      <li><button onclick="location.href='/Home'">Home</button></li>
     </ul>
+  </nav>
   <script>
     function searchFundraisers() {
       const organizer = document.getElementById('organizer').value;
       const city = document.getElementById('city').value;
-      const category = document.getElementById('category').value;
+      const category = document.getElementById('category').value;// Get the input value
 
       if (!organizer && !city && !category) {
-        alert('At least one search criteria must be provided');
+        alert('At least one search criteria must be provided');// If no search criteria are provided, a message is displayed
         return;
       }
-
+// Send a request to search for fundraisers by organizer, city and category
       fetch(`/api/search?organizer=${organizer}&city=${city}&category=${category}`)
         .then(response => response.json())
         .then(data => {
           const results = document.getElementById('search-results');
-          results.innerHTML = '';
+          results.innerHTML = '';// Empty the search results container
           if (data.length === 0) {
-            results.innerHTML = '<li style="color: red; font-weight: bold;">No fundraisers found</li>';
+            results.innerHTML = '<li style="color: red; font-weight: bold;">No fundraisers found</li>';// If no fundraiser is found, a message is displayed
           } else {
             data.forEach(fundraiser => {
               const listItem = document.createElement('li');
               listItem.innerHTML = `
-                <strong>ID:</strong> ${fundraiser.FUNDRAISE_ID} <br>
+                <strong>ID:</strong> ${fundraiser.FUNDRAISER_ID} <br>
                 <strong>Organizer:</strong> ${fundraiser.ORGANIZER} <br>
                 <strong>Caption:</strong> ${fundraiser.CAPTION} <br>
                 <strong>Target Funding:</strong> ${fundraiser.TARGET_FUNDING} <br>
@@ -53,8 +148,8 @@
                 <strong>City:</strong> ${fundraiser.CITY} <br>
                 <strong>Active:</strong> ${fundraiser.ACTIVE} <br>
                 <strong>Category:</strong> ${fundraiser.CATEGORY_NAME} <br>
-                <a href="/fundraiser.html?id=${fundraiser.FUNDRAISE_ID}">View Details</a>
-              `;
+                <a href="/fundraisers?id=${fundraiser.FUNDRAISER_ID}">View Details</a>
+              `;// Set the contents of the list item to display the details of the fundraising campaign
               results.appendChild(listItem);
             });
           }
@@ -64,9 +159,10 @@
     function clearCheckboxes() {
       document.getElementById('organizer').value = '';
       document.getElementById('city').value = '';
-      document.getElementById('category').value = '';
+      document.getElementById('category').value = '';//Clear the entered values
     }
   </script>
 </body>
 </html>
+
 
