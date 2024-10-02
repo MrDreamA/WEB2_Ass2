@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundraiser Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;/* Sets the font for the page*/ 
+      background-color: #f4f4f9;/* Sets the background color of the page */
+      color: #333;/* Sets the text color */
+      margin: 0;/* Removes the default margins */ 
+      padding: 0;/* Removes the default padding */
+    }
+    h1 {
+      color: #4CAF50;
+      text-align: center;/* Center the title */
+      margin-top: 20px;/* Sets the top margin of the title */
+    }
+    #fundraiser-details {
+      max-width: 600px;/* Sets the maximum width of the container */
+      margin: 20px auto;/* Sets the margin of the container to center horizontally */
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;/* Set the rounded corners of the container */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);/* Sets the shadow effect of the container */
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;/* Sets the cursor style when the mouse hovers over the button */
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    nav {
+      display: flex;/* Set the navigation bar to an elastic layout */
+      justify-content: center;
+      background-color: #333;
+      padding: 10px 0;
+    }
+    nav ul {
+      list-style-type: none;/* Removes the default style */ 
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+    nav ul li {
+      margin: 0 10px;
+    }
+    nav ul li button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+    nav ul li button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fundraiser Details</h1>
+  <div id="fundraiser-details"></div>
+  <button onclick="donate()">Donate</button>
+  <nav>
+    <ul>
+      <li><button onclick="location.href='/Home'">Home</button></li>
+      <li><button onclick="location.href='search'">Search Fundraisers</button></li>
+    </ul>
+  </nav>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);// Get the query parameters in the URL
+    const fundraiserId = urlParams.get('id');// Get the ID of the fundraiser
+
+    fetch(`/api/fundraiser/${fundraiserId}`)// Send a request for fundraising details
+      .then(response => response.json())// Convert the response to JSON format
+      .then(data => {
+        const details = document.getElementById('fundraiser-details');// Get a container to display fundraising details
+        details.innerHTML = `
+          <strong>ID:</strong> ${data.FUNDRAISER_ID} <br>
+          <strong>Organizer:</strong> ${data.ORGANIZER} <br>
+          <strong>Caption:</strong> ${data.CAPTION} <br>
+          <strong>Target Funding:</strong> ${data.TARGET_FUNDING} <br>
+          <strong>Current Funding:</strong> ${data.CURRENT_FUNDING} <br>
+          <strong>City:</strong> ${data.CITY} <br>
+          <strong>Active:</strong> ${data.ACTIVE} <br>
+          <strong>Category:</strong> ${data.CATEGORY_ID} <br>
+        `;// Show fundraising details on the page
+      });
+
+    function donate() {
+      alert('This feature is under construction');// A prompt message is displayed when you click the donation button
+    }
+  </script>
+</body>
+</html>
